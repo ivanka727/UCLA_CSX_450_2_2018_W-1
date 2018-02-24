@@ -8,14 +8,8 @@
 # then plot 1 will go in the upper left, 2 will go in the upper right, and
 # 3 will go all the way across the bottom.
 #
-library(ggplot2)
-library(grid)
-
-library(repr)
-options(repr.plot.width=20, repr.plot.height=8)
-
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
-
+  library(grid)
 
   # Make a list from the ... arguments and plotlist
   plots <- c(list(...), plotlist)
@@ -48,19 +42,4 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
                                       layout.pos.col = matchidx$col))
     }
   }
-}
-
-hist_with_kde <- function (feature) {
-    plot <- qplot(feature, geom="histogram", bins=200, alpha=I(.4), y = ..density..)+
-        geom_vline(aes(xintercept=mean(feature, rm.na=T)), color="red", linetype="dashed", size=1)+
-        geom_vline(aes(xintercept=median(feature)), color="blue", linetype="dashed", size=1)+
-        geom_density()
-    return(plot)
-}
-
-hist_with_kde_numerical_by_category <- function (numerical_feature, categorical_feature) {
-    plot <- qplot(numerical_feature, geom="histogram", bins=200, alpha=I(.4), 
-                  y = ..density.., fill=categorical_feature) +
-    geom_density(alpha=0.2)
-    return(plot)
 }
